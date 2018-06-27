@@ -1,0 +1,57 @@
+﻿@using BlazorKendoUI.WebApp.Shared
+@using BlazorKendoUI.Shared;
+@page "/grid"
+@using BlazorKendoUI.Models
+@inject HttpClient Http
+
+<h1>Grid</h1>
+
+<button class="btn btn-primary" onclick="@MyHandler">Refresh Grid</button>
+
+<KendoGrid ref="_grid" KendoModel="@Model" GridBeforeEdit="@OnGridBeforeEdit" GridChange="@OnGridChange"></KendoGrid>
+
+@functions {
+    KendoGrid _grid;
+    public GridModel Model { get; set; }
+
+    protected override void OnInit()
+    {
+        Model = new GridModel()
+        {
+            Columns = new List<GridColumn>()
+            {
+                new GridColumn { Field = "date" },
+                new GridColumn { Field = "temperatureC" },
+                new GridColumn { Field = "summary" },
+                new GridColumn { Command = "edit" }
+            },
+            Sortable = true
+        };
+
+        base.OnInit();
+    }
+
+    async void MyHandler()
+    {
+        Model.Data = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+
+        _grid.UpdateGrid();
+    }
+
+    void OnGridBeforeEdit()
+    {
+        Console.WriteLine("GRID BEFORE EDIT");
+    }
+
+    void OnGridChange()
+    {
+        Console.WriteLine("GRID CHANGE");
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        Model.Data = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+
+        _grid.UpdateGrid();
+    }
+}

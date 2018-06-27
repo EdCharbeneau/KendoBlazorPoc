@@ -1,0 +1,19 @@
+﻿@page "/"
+
+@using BlazorKendoUI.Models
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<select asp-for="Gender" class="form-control" bind="@Gender">
+    <option value="">-- Select Gender --</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+</select>
+
+<input type="text" bind="@Gender" />
+
+@functions {
+    public string Gender { get; set; }
+}

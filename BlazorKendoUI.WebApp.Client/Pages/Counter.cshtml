@@ -1,0 +1,35 @@
+﻿@page "/counter"
+@using BlazorKendoUI.Models
+
+<h1>Counter</h1>
+
+<p>Current count: @currentCount</p>
+
+<button class="btn btn-primary" onclick="@IncrementCount">Increment</button>
+
+<KendoButton KendoModel="Model" OnButtonClick="@DecrementCount"></KendoButton>
+
+@functions {
+    int currentCount = 0;
+
+    void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    public ButtonModel Model { get; set; }
+
+    protected override void OnInit()
+    {
+        Model = new ButtonModel();
+
+        base.OnInit();
+    }
+
+    void DecrementCount()
+    {
+        // Doesn't trigger refresh of currentCount value?
+
+        currentCount--;
+    }
+}

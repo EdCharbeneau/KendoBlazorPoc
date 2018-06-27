@@ -1,0 +1,52 @@
+﻿@using BlazorKendoUI
+@using BlazorKendoUI.Models;
+@using Microsoft.AspNetCore.Blazor.Components
+@implements IDisposable
+
+<div id="@KendoModel.Id"></div>
+
+@functions {
+    [Parameter]
+    GridModel KendoModel { get; set; }
+
+    [Parameter]
+    Action GridBeforeEdit
+    {
+        get
+        {
+            return KendoUIInterop.GetHandler(KendoModel.Id, "GridBeforeEdit");
+        }
+        set
+        {
+            KendoUIInterop.RegisterHandler(KendoModel.Id, "GridBeforeEdit", value);
+        }
+    }
+
+    [Parameter]
+    Action GridChange
+    {
+        get
+        {
+            return KendoUIInterop.GetHandler(KendoModel.Id, "GridChange");
+        }
+        set
+        {
+            KendoUIInterop.RegisterHandler(KendoModel.Id, "GridChange", value);
+        }
+    }
+
+    protected override void OnAfterRender()
+    {
+        KendoUIInterop.InitModel(KendoModel, "Grid");
+    }
+
+    public void Dispose()
+    {
+        KendoUIInterop.DisposeModel(KendoModel.Id);
+    }
+
+    public void UpdateGrid()
+    {
+        KendoUIInterop.UpdateModel(KendoModel, "Grid");
+    }
+}
