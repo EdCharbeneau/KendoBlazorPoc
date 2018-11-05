@@ -20,7 +20,7 @@
         get; set;
     }
     [JSInvokable]
-    void GridBeforeEdit()
+    public void GridBeforeEdit()
     {
         OnGridBeforeEdit.Invoke();
     }
@@ -31,7 +31,7 @@
         get; set;
     }
     [JSInvokable]
-    void GridChange()
+    public void GridChange()
     {
         OnGridChange.Invoke();
     }

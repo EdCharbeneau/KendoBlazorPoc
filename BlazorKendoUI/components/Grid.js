@@ -15,10 +15,11 @@ window.KendoUI.Interop.Grid = {
         model.editable = "popup";
         model.selectable = true;
 
-        model.beforeEdit = function(sender) { raiseEvent(sender, 'GridBeforeEdit'); };
-        model.change = function(sender) { raiseEvent(sender, 'GridChange'); };
+        model.beforeEdit = function(e) { raiseEvent(e.sender, 'GridBeforeEdit'); };
+        model.change = function(e) { raiseEvent(e.sender, 'GridChange'); };
 
         var grid = $(element).kendoGrid(model).data("kendoGrid");
+
         grid._componentRef = componentReference;
 
         return true;
