@@ -7,7 +7,8 @@
 
 <button class="btn btn-primary" onclick="@IncrementCount">Increment</button>
 
-<KendoButton KendoModel="Model" OnButtonClick="@DecrementCount"></KendoButton>
+<KendoButton OnButtonClick="@Increment1">1</KendoButton>
+<KendoButton OnButtonClick="@Increment10">10</KendoButton>
 
 @functions {
     int currentCount = 0;
@@ -17,12 +18,20 @@
         currentCount++;
     }
 
-    public ButtonModel Model { get; set; }
+    void Increment1()
+    {
+        currentCount += 1;
+        StateHasChanged();
+    }
+
+    void Increment10()
+    {
+        currentCount += 10;
+        StateHasChanged();
+    }
 
     protected override void OnInit()
     {
-        Model = new ButtonModel();
-
         base.OnInit();
     }
 

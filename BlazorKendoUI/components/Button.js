@@ -1,20 +1,21 @@
-﻿Blazor.registerFunction("KendoUI.Interop.Button.Init", (model) => {
-    var id = model.id;
-    var element = document.getElementById(id);
+﻿if (!window.KendoUI) {
+    window.KendoUI = {};
+}
 
-    $(`#${id}`).kendoButton({
-        click: function() {
-            var result = Blazor.invokeDotNetMethod({
-                type: {
-                    assembly: 'BlazorKendoUI',
-                    name: 'BlazorKendoUI.KendoUIInterop'
-                },
-                method: {
-                    name: 'TriggerEvent'
-                }
-            }, id, 'ButtonClicked');
-        }
-    });
+if (!window.KendoUI.Interop) {
+    window.KendoUI.Interop = {};
+}
 
-    return true;
-});
+window.KendoUI.Interop.Button = {
+    Init:(element, model, componentReference) => {
+        var componentRef = componentReference;
+
+        $(element).kendoButton({
+            click: function() {
+                componentRef.invokeMethodAsync("ButtonClick");
+            }
+        });
+
+        return true;
+    }
+};

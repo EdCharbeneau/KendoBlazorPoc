@@ -1,52 +1,58 @@
 ﻿@using BlazorKendoUI
 @using BlazorKendoUI.Models;
 @using Microsoft.AspNetCore.Blazor.Components
+@using Microsoft.JSInterop;
 @implements IDisposable
 
-<div id="@KendoModel.Id"></div>
+<div ref="element"></div>
 
 @functions {
+    private bool shouldRender = true;
+
     [Parameter]
     GridModel KendoModel { get; set; }
 
+    ElementRef element;
+
     [Parameter]
-    Action GridBeforeEdit
+    Action OnGridBeforeEdit
     {
-        get
-        {
-            return KendoUIInterop.GetHandler(KendoModel.Id, "GridBeforeEdit");
-        }
-        set
-        {
-            KendoUIInterop.RegisterHandler(KendoModel.Id, "GridBeforeEdit", value);
-        }
+        get; set;
+    }
+    [JSInvokable]
+    void GridBeforeEdit()
+    {
+        OnGridBeforeEdit.Invoke();
     }
 
     [Parameter]
-    Action GridChange
+    Action OnGridChange
     {
-        get
-        {
-            return KendoUIInterop.GetHandler(KendoModel.Id, "GridChange");
-        }
-        set
-        {
-            KendoUIInterop.RegisterHandler(KendoModel.Id, "GridChange", value);
-        }
+        get; set;
+    }
+    [JSInvokable]
+    void GridChange()
+    {
+        OnGridChange.Invoke();
     }
 
     protected override void OnAfterRender()
     {
-        KendoUIInterop.InitModel(KendoModel, "Grid");
+        if (shouldRender)
+        {
+            KendoUIInterop.Init(element, KendoModel, this);
+
+            shouldRender = false;
+        }
     }
 
     public void Dispose()
     {
-        KendoUIInterop.DisposeModel(KendoModel.Id);
+        KendoUIInterop.Dispose(element);
     }
 
     public void UpdateGrid()
     {
-        KendoUIInterop.UpdateModel(KendoModel, "Grid");
+        KendoUIInterop.Update(element, KendoModel);
     }
 }

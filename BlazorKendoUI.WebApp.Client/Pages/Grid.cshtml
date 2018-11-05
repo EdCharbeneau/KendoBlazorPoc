@@ -8,7 +8,7 @@
 
 <button class="btn btn-primary" onclick="@MyHandler">Refresh Grid</button>
 
-<KendoGrid ref="_grid" KendoModel="@Model" GridBeforeEdit="@OnGridBeforeEdit" GridChange="@OnGridChange"></KendoGrid>
+<KendoGrid ref="_grid" KendoModel="@Model" OnGridBeforeEdit="@OnGridBeforeEdit" OnGridChange="@OnGridChange"></KendoGrid>
 
 @functions {
     KendoGrid _grid;

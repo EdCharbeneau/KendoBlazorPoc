@@ -7,7 +7,7 @@ namespace BlazorKendoUI.Models
 {
     public class GridModel : WidgetModelBase
     {
-        protected override string WidgetName { get => "Grid"; }
+        public override string WidgetName { get => "Grid"; }
 
         public IList<GridColumn> Columns { get; set; }
 

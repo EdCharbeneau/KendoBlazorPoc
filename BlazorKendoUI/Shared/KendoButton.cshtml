@@ -1,35 +1,38 @@
 ﻿@using BlazorKendoUI
 @using BlazorKendoUI.Models;
 @using Microsoft.AspNetCore.Blazor.Components
+@using Microsoft.JSInterop;
 @implements IDisposable
 
-<button id="@KendoModel.Id">Button</button>
+<button ref="element">@ChildContent</button>
 
 @functions {
     private bool shouldRender = true;
 
     [Parameter]
-    ButtonModel KendoModel { get; set; }
+    ButtonModel KendoModel { get; set; } = new ButtonModel();
+
+    ElementRef element;
 
     [Parameter]
-    Action OnButtonClick {
-        get
-        {
-            return KendoUIInterop.GetHandler(KendoModel.Id, "ButtonClicked");
-        }
-        set
-        {
-            KendoUIInterop.RegisterHandler(KendoModel.Id, "ButtonClicked", value);
-        }
+    private RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    Action OnButtonClick
+    {
+        get; set;
+    }
+    [JSInvokable]
+    public void ButtonClick()
+    {
+        OnButtonClick.Invoke();
     }
 
     protected override void OnAfterRender()
     {
-        Console.WriteLine("OnAfterRender");
-
         if (shouldRender)
         {
-            KendoUIInterop.InitModel(KendoModel, "Button");
+            KendoUIInterop.Init(element, KendoModel, this);
 
             shouldRender = false;
         }
@@ -37,6 +40,6 @@
 
     public void Dispose()
     {
-        KendoUIInterop.DisposeModel(KendoModel.Id);
+        KendoUIInterop.Dispose(element);
     }
 }

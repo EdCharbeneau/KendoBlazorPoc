@@ -1,47 +1,43 @@
-﻿Blazor.registerFunction("KendoUI.Interop.Grid.Init", (model) => {
-    var id = model.id;
-    var element = document.getElementById(id);
+﻿if (!window.KendoUI) {
+    window.KendoUI = {};
+}
 
-    model.dataSource = {
-        data: model.data
-    };
+if (!window.KendoUI.Interop) {
+    window.KendoUI.Interop = {};
+}
 
-    model.editable = "popup";
-    model.selectable = true;
+window.KendoUI.Interop.Grid = {
+    Init: (element, model, componentReference) => {
+        model.dataSource = {
+            data: model.data
+        };
 
-    model.beforeEdit = function(e) { raiseEvent(id, 'GridBeforeEdit'); };
-    model.change = function(e) { raiseEvent(id, 'GridChange'); };
+        model.editable = "popup";
+        model.selectable = true;
 
-    $(element).kendoGrid(model);
+        model.beforeEdit = function(sender) { raiseEvent(sender, 'GridBeforeEdit'); };
+        model.change = function(sender) { raiseEvent(sender, 'GridChange'); };
 
-    return true;
-});
+        var grid = $(element).kendoGrid(model).data("kendoGrid");
+        grid._componentRef = componentReference;
 
-Blazor.registerFunction("KendoUI.Interop.Grid.Update", (model) => {
-    var id = model.id;
-    var element = document.getElementById(id);
+        return true;
+    },
+    Update: (element, model) => {
+        model.dataSource = {
+            data: model.data
+        };
 
-    model.dataSource = {
-        data: model.data
-    };
+        var instance = kendo.widgetInstance($(element));
 
-    var instance = kendo.widgetInstance($(element));
-
-    if (instance) {
-        instance.setOptions(model);
-    }
-
-    return true;
-});
-
-function raiseEvent(id, eventName) {
-    return Blazor.invokeDotNetMethod({
-        type: {
-            assembly: 'BlazorKendoUI',
-            name: 'BlazorKendoUI.KendoUIInterop'
-        },
-        method: {
-            name: 'TriggerEvent'
+        if (instance) {
+            instance.setOptions(model);
         }
-    }, id, eventName);
+
+        return true;
+    }
+};
+
+function raiseEvent(sender, eventName) {
+    sender._componentRef.invokeMethodAsync(eventName);
 }

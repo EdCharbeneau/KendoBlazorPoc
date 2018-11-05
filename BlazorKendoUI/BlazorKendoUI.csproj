@@ -5,13 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <BlazorGenerate Remove="Shared\KendoButton.cshtml" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="0.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.6.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,9 +28,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Shared\KendoGrid.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
 </Project>

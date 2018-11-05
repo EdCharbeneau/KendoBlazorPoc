@@ -1,3 +1,14 @@
-﻿Blazor.registerFunction("KendoUI.Interop.Widget.Dispose", (id) => {
-    kendo.destroy(document.getElementById(id));
-});
+﻿if (!window.KendoUI) {
+    window.KendoUI = {};
+}
+
+if (!window.KendoUI.Interop) {
+    window.KendoUI.Interop = {};
+}
+
+window.KendoUI.Interop.Widget = {
+    Dispose: (element) => {
+        kendo.destroy(element);
+    }
+};
+
