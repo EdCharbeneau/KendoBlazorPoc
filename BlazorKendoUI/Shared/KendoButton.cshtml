@@ -9,30 +9,22 @@
 @functions {
     private bool shouldRender = true;
 
-    [Parameter]
-    ButtonModel KendoModel { get; set; } = new ButtonModel();
-
     ElementRef element;
 
     [Parameter]
     private RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    Action OnButtonClick
-    {
-        get; set;
-    }
+    Action OnButtonClick { get; set; }
     [JSInvokable]
-    public void ButtonClick()
-    {
-        OnButtonClick.Invoke();
-    }
+    public void ButtonClick() => OnButtonClick.Invoke();
+
 
     protected override void OnAfterRender()
     {
         if (shouldRender)
         {
-            KendoUIInterop.Init(element, KendoModel, this);
+            KendoUIInterop.Init(element, GetModel(), this);
 
             shouldRender = false;
         }
@@ -41,5 +33,10 @@
     public void Dispose()
     {
         KendoUIInterop.Dispose(element);
+    }
+
+    private ButtonModel GetModel()
+    {
+        return new ButtonModel();
     }
 }

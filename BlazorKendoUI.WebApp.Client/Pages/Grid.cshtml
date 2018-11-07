@@ -8,34 +8,41 @@
 
 <button class="btn btn-primary" onclick="@MyHandler">Refresh Grid</button>
 
-<KendoGrid ref="_grid" KendoModel="@Model" OnGridBeforeEdit="@OnGridBeforeEdit" OnGridChange="@OnGridChange"></KendoGrid>
+<KendoGrid ref="_grid"
+    Data="@GridData"
+    Sortable="true"
+    Columns="@Columns"
+    OnGridBeforeEdit="@OnGridBeforeEdit"
+    OnGridChange="@OnGridChange">
+</KendoGrid>
 
 @functions {
     KendoGrid _grid;
     public GridModel Model { get; set; }
+    public IEnumerable<object> GridData { get; set; }
+    List<GridColumn> Columns { get; set; }
 
     protected override void OnInit()
     {
-        Model = new GridModel()
+        Columns = new List<GridColumn>()
         {
-            Columns = new List<GridColumn>()
-            {
-                new GridColumn { Field = "date" },
-                new GridColumn { Field = "temperatureC" },
-                new GridColumn { Field = "summary" },
-                new GridColumn { Command = "edit" }
-            },
-            Sortable = true
+            new GridColumn { Field = "date" },
+            new GridColumn { Field = "temperatureC" },
+            new GridColumn { Field = "summary" },
+            new GridColumn { Command = "edit" }
         };
 
         base.OnInit();
     }
 
-    async void MyHandler()
+    async Task MyHandler()
     {
-        Model.Data = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+        GridData = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+    }
 
-        _grid.UpdateGrid();
+    protected override async Task OnInitAsync()
+    {
+        GridData = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
     }
 
     void OnGridBeforeEdit()
@@ -46,12 +53,5 @@
     void OnGridChange()
     {
         Console.WriteLine("GRID CHANGE");
-    }
-
-    protected override async Task OnInitAsync()
-    {
-        Model.Data = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
-
-        _grid.UpdateGrid();
     }
 }

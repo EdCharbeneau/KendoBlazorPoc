@@ -11,7 +11,7 @@ namespace BlazorKendoUI.Models
 
         public IList<GridColumn> Columns { get; set; }
 
-        public IEnumerable Data { get; set; }
+        public IEnumerable<object> Data { get; set; }
 
         public bool Sortable { get; set; }
     }

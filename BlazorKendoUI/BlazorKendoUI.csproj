@@ -28,4 +28,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorKendoUI.WebApp.Shared\BlazorKendoUI.WebApp.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

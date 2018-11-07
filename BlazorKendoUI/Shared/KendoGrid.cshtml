@@ -2,6 +2,7 @@
 @using BlazorKendoUI.Models;
 @using Microsoft.AspNetCore.Blazor.Components
 @using Microsoft.JSInterop;
+@using BlazorKendoUI.WebApp.Shared
 @implements IDisposable
 
 <div ref="element"></div>
@@ -10,37 +11,38 @@
     private bool shouldRender = true;
 
     [Parameter]
-    GridModel KendoModel { get; set; }
+    IEnumerable<object> Data { get; set; }
+
+    [Parameter]
+    bool Sortable { get; set; }
+
+    [Parameter]
+    List<GridColumn> Columns { get; set; }
 
     ElementRef element;
 
     [Parameter]
-    Action OnGridBeforeEdit
-    {
-        get; set;
-    }
+    Action OnGridBeforeEdit { get; set; }
     [JSInvokable]
-    public void GridBeforeEdit()
-    {
-        OnGridBeforeEdit.Invoke();
-    }
+    public void GridBeforeEdit() => OnGridBeforeEdit.Invoke();
 
     [Parameter]
-    Action OnGridChange
-    {
-        get; set;
-    }
+    Action OnGridChange { get; set; }
     [JSInvokable]
-    public void GridChange()
+    public void GridChange() => OnGridChange.Invoke();
+
+    protected override Task OnParametersSetAsync()
     {
-        OnGridChange.Invoke();
+        this.UpdateGrid();
+
+        return Task.CompletedTask;
     }
 
     protected override void OnAfterRender()
     {
         if (shouldRender)
         {
-            KendoUIInterop.Init(element, KendoModel, this);
+            KendoUIInterop.Init(element, GetModel(), this);
 
             shouldRender = false;
         }
@@ -53,6 +55,16 @@
 
     public void UpdateGrid()
     {
-        KendoUIInterop.Update(element, KendoModel);
+        KendoUIInterop.Update(element, GetModel());
+    }
+
+    private GridModel GetModel()
+    {
+        return new GridModel
+        {
+            Data = this.Data,
+            Columns = this.Columns,
+            Sortable = this.Sortable
+        };
     }
 }
