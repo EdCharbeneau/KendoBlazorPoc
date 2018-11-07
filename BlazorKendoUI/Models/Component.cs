@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BlazorKendoUI.Models
 {
-    public abstract class ComponentModelBase : IWidget
+    public abstract class ComponentModelBase : IComponent
     {
-        public abstract string WidgetName { get; }
+        public abstract string ComponentName { get; }
     }
 }

@@ -6,14 +6,14 @@ namespace BlazorKendoUI
 {
     public static class KendoUIInterop
     {
-        public static void Init(ElementRef element, IWidget model, object componentRef)
+        public static void Init(ElementRef element, IComponent model, object componentRef)
         {
-            JSRuntime.Current.InvokeAsync<bool>($"KendoUI.Interop.{model.WidgetName}.Init", element, model, new DotNetObjectRef(componentRef));
+            JSRuntime.Current.InvokeAsync<bool>($"KendoUI.Interop.{model.ComponentName}.Init", element, model, new DotNetObjectRef(componentRef));
         }
 
-        public static void Update(ElementRef element, IWidget model)
+        public static void Update(ElementRef element, IComponent model)
         {
-            JSRuntime.Current.InvokeAsync<bool>($"KendoUI.Interop.{model.WidgetName}.Update", element, model);
+            JSRuntime.Current.InvokeAsync<bool>($"KendoUI.Interop.{model.ComponentName}.Update", element, model);
         }
 
         public static void Dispose(ElementRef element)

@@ -6,6 +6,6 @@ namespace BlazorKendoUI.Models
 {
     public class ButtonModel : ComponentModelBase
     {
-        public override string WidgetName { get => "Button"; }
+        public override string ComponentName { get => "Button"; }
     }
 }
