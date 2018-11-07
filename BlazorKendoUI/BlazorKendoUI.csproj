@@ -11,19 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="components\Button.js" />
-    <None Remove="components\Grid.js" />
-    <None Remove="components\Widget.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="components\Widget.js">
+    <EmbeddedResource Include="scripts\Widget.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="components\Grid.js">
+    <EmbeddedResource Include="scripts\Grid.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="components\Button.js">
+    <EmbeddedResource Include="scripts\Button.js">
       <LogicalName>blazor:js:%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
   </ItemGroup>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BlazorKendoUI.Models
 {
-    public class GridModel : WidgetModelBase
+    public class GridModel : ComponentModelBase
     {
         public override string WidgetName { get => "Grid"; }
 

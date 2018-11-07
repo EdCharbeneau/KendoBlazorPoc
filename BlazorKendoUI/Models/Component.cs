@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BlazorKendoUI.Models
 {
-    public class ButtonModel : ComponentModelBase
+    public abstract class ComponentModelBase : IWidget
     {
-        public override string WidgetName { get => "Button"; }
+        public abstract string WidgetName { get; }
     }
 }
