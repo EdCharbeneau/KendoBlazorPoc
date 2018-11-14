@@ -20,15 +20,27 @@ namespace BlazorKendoUI.Components
         [Parameter]
         List<GridColumn> Columns { get; set; }
 
+        #region Events
+
         [Parameter]
         Action OnGridBeforeEdit { get; set; }
         [JSInvokable]
-        public void GridBeforeEdit() => OnGridBeforeEdit.Invoke();
+        public void GridBeforeEdit() => OnGridBeforeEdit?.Invoke();
 
         [Parameter]
         Action OnGridChange { get; set; }
         [JSInvokable]
-        public void GridChange() => OnGridChange.Invoke();
+        public void GridChange() => OnGridChange?.Invoke();
+
+        #endregion
+
+        #region Templates
+
+        [Parameter]
+        protected RenderFragment RowTemplate { get; set; }
+
+        #endregion
+
 
         protected override Task OnParametersSetAsync()
         {

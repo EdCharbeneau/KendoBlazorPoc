@@ -1,0 +1,61 @@
+﻿
+<button class="@ClassToRender" aria-disabled="@(!Enable)" disabled="@(!Enable)">
+    @if (!string.IsNullOrEmpty(ImageUrl))
+    {
+        <img alt="icon" src="@ImageUrl" class="k-image" />
+    }
+    else if (!string.IsNullOrEmpty(Icon))
+    {
+        <span class="k-icon k-i-@Icon"></span>
+    }
+    else if (!string.IsNullOrEmpty(SpriteClass))
+    {
+        <span class="k-sprite k-icon @SpriteClass"></span>
+    }
+    @ChildContent
+</button>
+
+@functions{
+    [Parameter]
+    RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    string Class { get; set; }
+
+    [Parameter]
+    string Icon { get; set; }
+
+    [Parameter]
+    string ImageUrl { get; set; }
+
+    [Parameter]
+    string SpriteClass { get; set; }
+
+    [Parameter]
+    bool Enable { get; set; } = true;
+
+    protected string ClassToRender { get; set; }
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+    }
+
+    protected override void OnParametersSet()
+    {
+        ClassToRender = (Class + " k-button").Trim();
+
+        if (!string.IsNullOrEmpty(Icon) || !string.IsNullOrEmpty(ImageUrl) || !string.IsNullOrEmpty(SpriteClass))
+        {
+            ClassToRender += " k-button-icontext";
+        }
+
+        if (!Enable)
+        {
+            ClassToRender += " k-state-disabled";
+        }
+
+        base.OnParametersSet();
+    }
+
+}

@@ -16,7 +16,7 @@ namespace BlazorKendoUI.Components
         [Parameter]
         Action OnButtonClick { get; set; }
         [JSInvokable]
-        public void ButtonClick() => OnButtonClick.Invoke();
+        public void ButtonClick() => OnButtonClick?.Invoke();
 
         protected override ComponentModelBase GetModel()
         {

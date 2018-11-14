@@ -14,6 +14,13 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorKendoUI.WebApp.Shared\BlazorKendoUI.WebApp.Shared.csproj" />
     <ProjectReference Include="..\BlazorKendoUI\BlazorKendoUI.csproj" />
+    <ProjectReference Include="..\BlazorNativeKendoUI\BlazorNativeKendoUI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\ButtonPage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

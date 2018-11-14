@@ -1,0 +1,25 @@
+﻿@page "/button"
+
+<KendoNativeButton>Only Button</KendoNativeButton>
+<KendoNativeButton Class="k-primary">Class</KendoNativeButton>
+
+<br />
+
+<KendoNativeButton SpriteClass="k-icon netherlandsFlag" Class="active">Sprite</KendoNativeButton>
+<KendoNativeButton Icon="filter" Class="active">Icon</KendoNativeButton>
+<KendoNativeButton ImageUrl="https://demos.telerik.com/kendo-ui/content/shared/icons/sports/snowboarding.png" Class="active">Image Url</KendoNativeButton>
+
+<br />
+
+<KendoNativeButton Enable="false">Disabled Button</KendoNativeButton>
+
+
+<style>
+    .netherlandsFlag {
+        background-image: url("https://demos.telerik.com/kendo-ui/content/shared/styles/flags.png");
+        background-position: 0 -64px;
+    }
+</style>
+
+@functions {
+}
