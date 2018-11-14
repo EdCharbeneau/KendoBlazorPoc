@@ -1,5 +1,6 @@
 ﻿
-<button class="@ClassToRender" aria-disabled="@(!Enable)" disabled="@(!Enable)">
+<button class="@ClassToRender" aria-disabled="@(!Enable)" disabled="@(!Enable)"
+        onclick="@(e => OnButtonClick?.Invoke())">
     @if (!string.IsNullOrEmpty(ImageUrl))
     {
         <img alt="icon" src="@ImageUrl" class="k-image" />
@@ -34,6 +35,9 @@
     [Parameter]
     bool Enable { get; set; } = true;
 
+    [Parameter]
+    Action OnButtonClick { get; set; }
+
     protected string ClassToRender { get; set; }
 
     protected override void OnInit()
@@ -57,5 +61,7 @@
 
         base.OnParametersSet();
     }
+
+
 
 }

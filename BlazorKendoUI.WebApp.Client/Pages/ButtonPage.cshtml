@@ -11,8 +11,12 @@
 
 <br />
 
-<KendoNativeButton Enable="false">Disabled Button</KendoNativeButton>
+<KendoNativeButton Enable="@IsEnabled">Disabled Button</KendoNativeButton>
 
+<br />
+
+
+<KendoNativeButton OnButtonClick="@ToggleState">Toggle Disabled state</KendoNativeButton>
 
 <style>
     .netherlandsFlag {
@@ -22,4 +26,11 @@
 </style>
 
 @functions {
+    public bool IsEnabled { get; set; }
+
+    void ToggleState()
+    {
+        IsEnabled = !IsEnabled;
+        StateHasChanged();
+    }
 }
