@@ -2,12 +2,24 @@
 @inject HttpClient Http
 @using BlazorKendoUI.WebApp.Shared
 
-<KendoNativeGrid Data="@GridData">Only Grid</KendoNativeGrid>
+<button class="btn btn-primary" onclick="@MyHandler">Refresh Grid</button>
+
+<KendoNativeGrid Data="@GridData">
+    <KendoGridColumn Field="Date"></KendoGridColumn>
+    <KendoGridColumn Field="TemperatureC"></KendoGridColumn>
+    <KendoGridColumn Field="Summary"></KendoGridColumn>
+</KendoNativeGrid>
 
 
 @functions {
     public IEnumerable<object> GridData { get; set; }
 
+
+
+    async Task MyHandler()
+    {
+        GridData = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+    }
 
     protected override async Task OnInitAsync()
     {

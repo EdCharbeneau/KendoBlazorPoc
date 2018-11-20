@@ -1,16 +1,40 @@
 ﻿
-@*<cascadingvalue value=this>
-    @childcontent
-</cascadingvalue>*@
+<CascadingValue Value=this>
+    @ChildContent
+</CascadingValue>
 
 <div class="@ClassToRender">
-    @if (Data != null)
-    {
-        @foreach (var item in Data)
-        {
-            <tr>@item.ToString()</tr>
-        }
-    }
+    <table>
+        <colgroup>
+
+            @foreach (var item in Columns)
+            {
+                <col>
+            }
+        </colgroup>
+        <thead>
+            <tr>
+                @foreach (var item in Columns)
+                {
+                    <th>@item.Field</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Data != null)
+            {
+                @foreach (var item in Data)
+                {
+                    <tr>
+                        @foreach (var col in Columns)
+                        {
+                            <td>@item.GetType().GetProperty(col.Field).GetValue(item, null)</td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>
 
 @functions {
@@ -25,6 +49,8 @@
 
     protected string ClassToRender { get; set; }
 
+    protected List<IGridColumn> Columns { get; set; } = new List<IGridColumn>();
+
     protected override void OnInit()
     {
         base.OnInit();
@@ -37,13 +63,15 @@
         base.OnParametersSet();
     }
 
-    public void AddColumn(KendoGridColumn column)
+    public void AddColumn(IGridColumn column)
     {
-
+        Columns.Add(column);
+        StateHasChanged();
     }
 
-    public void RemoveColumn(KendoGridColumn column)
+    public void RemoveColumn(IGridColumn column)
     {
-
+        Columns.Remove(column);
+        StateHasChanged();
     }
 }
