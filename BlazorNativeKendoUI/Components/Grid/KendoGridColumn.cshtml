@@ -1,0 +1,18 @@
+﻿@implements IDisposable
+
+@functions {
+    //[CascadingParameter] KendoNativeGrid ContainerGrid { get; set; }
+
+    [Parameter]
+    string Field { get; set; }
+
+    protected override void OnInit()
+    {
+        //ContainerGrid.AddColumn(this);
+    }
+
+    public void Dispose()
+    {
+        //ContainerGrid.RemoveColumn(this);
+    }
+}

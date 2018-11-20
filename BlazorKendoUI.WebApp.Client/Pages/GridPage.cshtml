@@ -1,0 +1,17 @@
+﻿@page "/nativegrid"
+@inject HttpClient Http
+@using BlazorKendoUI.WebApp.Shared
+
+<KendoNativeGrid Data="@GridData">Only Grid</KendoNativeGrid>
+
+
+@functions {
+    public IEnumerable<object> GridData { get; set; }
+
+
+    protected override async Task OnInitAsync()
+    {
+        GridData = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+    }
+
+}

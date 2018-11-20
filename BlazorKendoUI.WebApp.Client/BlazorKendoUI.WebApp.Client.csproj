@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Pages\GridPage.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\ButtonPage.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

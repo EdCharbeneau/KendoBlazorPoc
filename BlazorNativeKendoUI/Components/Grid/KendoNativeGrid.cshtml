@@ -1,0 +1,49 @@
+﻿
+@*<CascadingValue Value=this>
+    @ChildContent
+</CascadingValue>*@
+
+<div class="@ClassToRender">
+    @if (Data != null)
+    {
+        @foreach (var item in Data)
+        {
+            <tr>@item.ToString()</tr>
+        }
+    }
+</div>
+
+@functions {
+    [Parameter]
+    RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    string Class { get; set; }
+
+    [Parameter]
+    IEnumerable<object> Data { get; set; }
+
+    protected string ClassToRender { get; set; }
+
+    protected override void OnInit()
+    {
+        base.OnInit();
+    }
+
+    protected override void OnParametersSet()
+    {
+        ClassToRender = (Class + " k-grid k-widget k-display-block").Trim();
+
+        base.OnParametersSet();
+    }
+
+    public void AddColumn(KendoGridColumn column)
+    {
+
+    }
+
+    public void RemoveColumn(KendoGridColumn column)
+    {
+
+    }
+}
