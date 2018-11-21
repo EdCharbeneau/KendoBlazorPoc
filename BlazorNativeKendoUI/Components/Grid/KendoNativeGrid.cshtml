@@ -3,75 +3,91 @@
     @ChildContent
 </CascadingValue>
 
-<div class="@ClassToRender">
-    <table>
-        <colgroup>
-
-            @foreach (var item in Columns)
-            {
-                <col>
-            }
-        </colgroup>
-        <thead>
-            <tr>
-                @foreach (var item in Columns)
-                {
-                    <th>@item.Field</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @if (Data != null)
-            {
-                @foreach (var item in Data)
-                {
-                    <tr>
-                        @foreach (var col in Columns)
+<div class="@ClassToRender" style="height: 550px;">
+    <div class="k-grid-header" style="padding-right: 15px;">
+        <div class="k-grid-header-wrap k-auto-scrollable">
+            <table role="grid">
+                <colgroup>
+                    @foreach (var item in Columns)
+                    {
+                        <col>
+                    }
+                </colgroup>
+                <thead role="rowgroup">
+                    <tr role="row">
+                        @foreach (var item in Columns)
                         {
-                            <td>@item.GetType().GetProperty(col.Field).GetValue(item, null)</td>
+                            <th class="k-header" data-role="columnsorter">
+                                <a class="k-link" href="#">@item.Field</a>
+                            </th>
                         }
                     </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="k-grid-content k-auto-scrollable" style="height: 511px;">
+        <table id="grid" data-role="grid" role="grid" style="height: auto;">
+            <colgroup>
+                @foreach (var item in Columns)
+                {
+                    <col>
                 }
-            }
-        </tbody>
-    </table>
+            </colgroup>
+            <tbody role="rowgroup">
+                @if (Data != null)
+                {
+                    @for (var i = 0; i < Data.Count(); i++)
+                    {
+                        var item = Data.ElementAt(i);
+                        <tr role="row">
+                            @foreach (var col in Columns)
+                            {
+                            <td class="" role="gridcell">@item.GetType().GetProperty(col.Field).GetValue(item, null)</td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @functions {
-    [Parameter]
-    RenderFragment ChildContent { get; set; }
+[Parameter]
+RenderFragment ChildContent { get; set; }
 
-    [Parameter]
-    string Class { get; set; }
+[Parameter]
+string Class { get; set; }
 
-    [Parameter]
-    IEnumerable<object> Data { get; set; }
+[Parameter]
+IEnumerable<object> Data { get; set; }
 
-    protected string ClassToRender { get; set; }
+protected string ClassToRender { get; set; }
 
-    protected List<IGridColumn> Columns { get; set; } = new List<IGridColumn>();
+protected List<IGridColumn> Columns { get; set; } = new List<IGridColumn>();
 
-    protected override void OnInit()
-    {
-        base.OnInit();
-    }
+protected override void OnInit()
+{
+    base.OnInit();
+}
 
-    protected override void OnParametersSet()
-    {
-        ClassToRender = (Class + " k-grid k-widget k-display-block").Trim();
+protected override void OnParametersSet()
+{
+    ClassToRender = (Class + " k-grid k-widget k-display-block").Trim();
 
-        base.OnParametersSet();
-    }
+    base.OnParametersSet();
+}
 
-    public void AddColumn(IGridColumn column)
-    {
-        Columns.Add(column);
-        StateHasChanged();
-    }
+public void AddColumn(IGridColumn column)
+{
+    Columns.Add(column);
+    StateHasChanged();
+}
 
-    public void RemoveColumn(IGridColumn column)
-    {
-        Columns.Remove(column);
-        StateHasChanged();
-    }
+public void RemoveColumn(IGridColumn column)
+{
+    Columns.Remove(column);
+    StateHasChanged();
+}
 }
