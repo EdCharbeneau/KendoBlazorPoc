@@ -1,0 +1,47 @@
+﻿<CascadingValue Value=this>
+    <div class="k-widget k-header k-floatwrap k-tabstrip k-tabstrip-top">
+        <ul class="k-tabstrip-items k-reset" role="tablist" tabindex="0">
+            @ChildContent
+        </ul>
+        <div class="k-content k-state-active" style="display:block;">
+            <div class="k-animation-container k-animation-container-relative" style="position: initial;">
+                <div class="k-child-animation-container" style="transition-delay: 0ms;">
+                    <div role="tabpanel" aria-expanded="true" id="0">
+                        @ActiveTab?.ChildContent
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</CascadingValue>
+
+@functions {
+[Parameter] protected RenderFragment ChildContent { get; set; }
+
+public ITab ActiveTab { get; private set; }
+
+public void AddTab(ITab tab)
+{
+    if (ActiveTab == null)
+    {
+        SetActiveTab(tab);
+    }
+}
+
+public void RemoveTab(ITab tab)
+{
+    if (ActiveTab == tab)
+    {
+        SetActiveTab(null);
+    }
+}
+
+public void SetActiveTab(ITab tab)
+{
+    if (ActiveTab != tab)
+    {
+        ActiveTab = tab;
+        StateHasChanged();
+    }
+}
+}

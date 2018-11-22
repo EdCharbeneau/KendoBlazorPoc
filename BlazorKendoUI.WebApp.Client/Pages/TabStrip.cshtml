@@ -1,0 +1,25 @@
+﻿@page "/nativetabstrip"
+@using BlazorNativeKendoUI.Components.TabStrip
+
+<h1>Kendo UI Native Tab Strip</h1>
+
+<KendoNativeTabStrip>
+    <Tab Title="Sofia">
+        <Weather City="Sofia"
+                 TempC="23"
+                 Forecast="ForecastType.Sunny">
+        </Weather>
+    </Tab>
+    <Tab Title="London">
+        <Weather City="London"
+                 TempC="21"
+                 Forecast="ForecastType.Cloudy">
+        </Weather>
+    </Tab>
+    <Tab Title="Paris">
+        <Weather City="Paris"
+                 TempC="17"
+                 Forecast="ForecastType.Rainy">
+        </Weather>
+    </Tab>
+</KendoNativeTabStrip>
