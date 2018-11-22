@@ -3,7 +3,7 @@
 
 <h1>Kendo UI Native Tab Strip</h1>
 
-<KendoNativeTabStrip>
+<KendoNativeTabStrip Selected="@SelectedTab" OnSelected="@OnTabSelected">
     <Tab Title="Sofia">
         <Weather City="Sofia"
                  TempC="23"
@@ -23,3 +23,24 @@
         </Weather>
     </Tab>
 </KendoNativeTabStrip>
+
+<p>Change value to select at runtime</p>
+<div><span>Tab Selected: </span><input type="number" bind="@SelectedTab" /></div>
+
+@functions {
+
+    int SelectedTab;
+
+    void OnTabSelected(int tabIndex)
+    {
+        SelectedTab = tabIndex;
+        StateHasChanged();
+    }
+
+    protected override void OnInit()
+    {
+        // Tabs aren't initialzied yet, this will fail
+        SelectedTab = 2;
+        StateHasChanged();
+    }
+}
