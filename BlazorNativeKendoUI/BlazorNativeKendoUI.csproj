@@ -16,6 +16,9 @@
     <Content Update="Components\Grid\KendoGridColumn.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Components\Grid\KendoGridHeader.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\Grid\KendoNativeGrid.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

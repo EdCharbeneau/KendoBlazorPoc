@@ -3,22 +3,33 @@
 @using BlazorKendoUI.WebApp.Shared
 
 <button class="btn btn-primary" onclick="@MyHandler">Refresh Grid</button>
+<button class="btn btn-primary" onclick="@MyHandler2">Remove Column From Grid</button>
 
 <KendoNativeGrid Data="@GridData">
+    @*<RowTemplate>asd</RowTemplate>*@
     <KendoGridColumn Field="Date"></KendoGridColumn>
     <KendoGridColumn Field="TemperatureC"></KendoGridColumn>
-    <KendoGridColumn Field="Summary"></KendoGridColumn>
+    @if (columnVisible)
+    {
+        <KendoGridColumn Field="Summary"></KendoGridColumn>
+    }
 </KendoNativeGrid>
 
 
 @functions {
     public IEnumerable<object> GridData { get; set; }
+    bool columnVisible = true;
 
 
 
     async Task MyHandler()
     {
         GridData = await Http.GetJsonAsync<WeatherForecast[]>("api/sampledata/WeatherForecasts");
+    }
+
+    async Task MyHandler2()
+    {
+        columnVisible = !columnVisible;
     }
 
     protected override async Task OnInitAsync()

@@ -3,38 +3,40 @@
     @ChildContent
 </CascadingValue>
 
-<div class="@ClassToRender">
-    <table>
-        <colgroup>
-
-            @foreach (var item in Columns)
-            {
-                <col>
-            }
-        </colgroup>
-        <thead>
-            <tr>
+<div class="@ClassToRender" style="height: 550px;">
+    <KendoGridHeader Columns="Columns"></KendoGridHeader>
+    <div class="k-grid-content k-auto-scrollable" style="height: 511px;">
+        <table id="grid" data-role="grid" role="grid" style="height: auto;">
+            <colgroup>
                 @foreach (var item in Columns)
                 {
-                    <th>@item.Field</th>
+                    <col>
                 }
-            </tr>
-        </thead>
-        <tbody>
-            @if (Data != null)
-            {
-                @foreach (var item in Data)
+            </colgroup>
+            <tbody role="rowgroup">
+                @if (Data != null)
                 {
-                    <tr>
-                        @foreach (var col in Columns)
-                        {
-                            <td>@item.GetType().GetProperty(col.Field).GetValue(item, null)</td>
-                        }
-                    </tr>
+                    @for (var i = 0; i < Data.Count(); i++)
+                    {
+                        var item = Data.ElementAt(i);
+                        <tr role="row">
+                            @if (RowTemplate != null)
+                            {
+                                @RowTemplate(item)
+                            }
+                            else
+                            {
+                                @foreach (var col in Columns)
+                                {
+                                    <td class="" role="gridcell">@item.GetType().GetProperty(col.Field).GetValue(item, null)</td>
+                                }
+                            }
+                        </tr>
+                    }
                 }
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @functions {
@@ -50,6 +52,9 @@
     protected string ClassToRender { get; set; }
 
     protected List<IGridColumn> Columns { get; set; } = new List<IGridColumn>();
+
+    [Parameter]
+    RenderFragment<object> RowTemplate { get; set; }
 
     protected override void OnInit()
     {

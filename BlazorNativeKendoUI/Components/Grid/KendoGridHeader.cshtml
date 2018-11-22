@@ -1,0 +1,32 @@
+﻿
+
+<div class="k-grid-header" style="padding-right: 17px;">
+    <div class="k-grid-header-wrap k-auto-scrollable">
+        <table role="grid">
+            <colgroup>
+                @foreach (var item in Columns)
+                {
+                <col>
+                }
+            </colgroup>
+            <thead role="rowgroup">
+                <tr role="row">
+                    @foreach (var item in Columns)
+                    {
+                    <th class="k-header" data-role="columnsorter">
+                        <a class="k-link" href="#">@item.Field</a>
+                    </th>
+                    }
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@functions {
+    [CascadingParameter] KendoNativeGrid ContainerGrid { get; set; }
+
+    [Parameter]
+    List<IGridColumn> Columns { get; set; } = new List<IGridColumn>();
+
+}
