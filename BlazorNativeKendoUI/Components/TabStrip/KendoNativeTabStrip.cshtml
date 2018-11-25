@@ -1,6 +1,6 @@
 ﻿<CascadingValue Value=this>
     <div class="k-widget k-header k-floatwrap k-tabstrip k-tabstrip-top">
-        <ul class="k-tabstrip-items k-reset" role="tablist" tabindex="0">
+        <ul class="k-tabstrip-items k-reset" role="tablist" tabindex="@selected">
             @ChildContent
         </ul>
         <div class="k-content k-state-active" style="display:block;">
@@ -18,10 +18,33 @@
 @functions {
 [Parameter] protected RenderFragment ChildContent { get; set; }
 
+[Parameter]
+protected int Selected
+{
+    get
+    {
+        return selected.Value;
+    }
+    set
+    {
+        if (value >= 0 && value <= tabs.Count - 1)
+        {
+            SetActiveTab(tabs[value]);
+        }
+    }
+}
+
+[Parameter] protected Action<int> OnSelected { get; set; }
+
+private int? selected;
+
+private List<ITab> tabs = new List<ITab>();
+
 public ITab ActiveTab { get; private set; }
 
 public void AddTab(ITab tab)
 {
+    tabs.Add(tab);
     if (ActiveTab == null)
     {
         SetActiveTab(tab);
@@ -30,6 +53,7 @@ public void AddTab(ITab tab)
 
 public void RemoveTab(ITab tab)
 {
+    tabs.Remove(tab);
     if (ActiveTab == tab)
     {
         SetActiveTab(null);
@@ -41,6 +65,8 @@ public void SetActiveTab(ITab tab)
     if (ActiveTab != tab)
     {
         ActiveTab = tab;
+        selected = tabs.IndexOf(tab);
+        OnSelected?.Invoke(selected.Value);
         StateHasChanged();
     }
 }
