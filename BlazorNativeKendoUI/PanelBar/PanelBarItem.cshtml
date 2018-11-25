@@ -1,0 +1,52 @@
+﻿@implements  IPanelBarItem
+<div id="k-panelbar-item-default-.0" onclick="@OnPanelBarClicked"
+     class="k-item k-state-default @ExpandedCss"
+     role="treeitem" aria-hidden="false" aria-selected="@Selected" aria-expanded="@Expanded">
+
+    <span class="k-link k-header @ExpandedCss @SelectedCss">
+        @Title
+        <span class="k-icon @ExpandedIconCss"></span>
+    </span>
+    @if (Expanded)
+    {
+        <div class="k-animation-container k-animation-container-relative" style="display: block;">
+            <div class="k-child-animation-container" style="transition-delay: 0ms;">
+                <div role="group" class="k-panel k-group">
+                    <div class="k-content">
+                        @ChildContent
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@functions { 
+
+    protected override void OnInit()
+    {
+        Parent.AddPanel(this);
+    }
+
+    void OnPanelBarClicked()
+    {
+        Expanded = !Expanded;
+        Parent.Deselect(this);
+        Selected = true;
+        StateHasChanged();
+    }
+
+    string SelectedCss => Selected ? "k-state-selected" : "";
+    string ExpandedCss => Expanded ? "k-state-expanded" : "";
+    string ExpandedIconCss => Expanded ? "k-i-arrow-n k-panelbar-collapse" : "k-i-arrow-s k-panelbar-expand";
+
+    [Parameter] protected string Title { get; set; }
+
+    [Parameter] public bool Expanded { get; set; }
+    [Parameter] public bool Selected { get; set; }
+
+    [Parameter] protected RenderFragment ChildContent { get; set; }
+
+    [CascadingParameter] PanelBar Parent { get; set; }
+
+}

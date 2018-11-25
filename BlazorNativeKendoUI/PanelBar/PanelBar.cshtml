@@ -1,0 +1,32 @@
+﻿
+<CascadingValue Value=this>
+    <div role="tree" tabindex="0" class="k-widget k-panelbar">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@functions {
+
+    [Parameter] protected RenderFragment ChildContent { get; set; }
+
+    List<IPanelBarItem> Panels = new List<IPanelBarItem>();
+
+    public void AddPanel(IPanelBarItem panel)
+    {
+        Panels.Add(panel);
+    }
+
+    public void Remove(IPanelBarItem panel)
+    {
+        Panels.Remove(panel);
+    }
+
+    public void Deselect(IPanelBarItem exclude)
+    {
+        foreach (var p in Panels.Where(panel => panel != exclude))
+        {
+            p.Selected = false;
+        }
+        StateHasChanged();
+    }
+}
